@@ -1,0 +1,4 @@
+date,product_id,product_name,sales,quantity,store_id
+2023-01-01,101,Apple,120.5,10.0,1.0
+2023-01-09,108,Kiwi,250.0,10.0,3.0
+2023-01-10,101,Apple,120.5,10.0,1.0
