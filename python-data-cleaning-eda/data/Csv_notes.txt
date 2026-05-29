@@ -1,0 +1,9 @@
+What’s wrong with this data?
+		Wrong date formats
+		Invalid dates
+		Missing product names
+		Missing store_id
+		Negative sales
+		Non‑numeric quantity
+		Duplicate rows
+		Blank sales values
