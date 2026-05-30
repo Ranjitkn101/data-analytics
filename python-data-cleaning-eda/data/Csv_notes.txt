@@ -7,3 +7,4 @@ What’s wrong with this data?
 		Non‑numeric quantity
 		Duplicate rows
 		Blank sales values
+		
