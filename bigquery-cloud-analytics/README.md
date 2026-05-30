@@ -296,6 +296,40 @@ Outcome: GCS bucket created, raw CSV uploaded, BigQuery dataset and `sales_raw` 
 - **Test Status**: All PASSED (0.65s)
 - **Platform**: Windows
 
+### Local run (venv) — `run_cleaning.py`
+
+I ran the cleaning pipeline locally inside the project's virtual environment using `python run_cleaning.py`. It executed successfully and produced the cleaned CSV at `data/sales_clean.csv`.
+
+Reproduce locally (from project root):
+
+```powershell
+# activate venv (PowerShell)
+(Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned) ; (& .\.venv\Scripts\Activate.ps1)
+python run_cleaning.py
+```
+
+Example output printed on success:
+
+```
+Cleaning pipeline completed successfully.
+```
+
+The cleaned file was written to: [data/sales_clean.csv](data/sales_clean.csv)
+
+### BigQuery result snapshot (verified)
+
+I queried the `sales_curated` table in BigQuery and verified the curated results. Below is a small sample snapshot from the table (first 10 rows shown):
+
+| order_id | customer_id | amount | quantity | order_date  | total_order_value | order_month |
+|---------:|:------------|-------:|---------:|:------------|------------------:|:-----------:|
+| 1061     | C001        | 250.0  | 1        | 2024-03-01  | 250.0             | 2024-03     |
+| 1091     | C001        | 325.0  | 1        | 2024-03-31  | 325.0             | 2024-03     |
+| 1031     | C001        | 175.0  | 1        | 2024-01-31  | 175.0             | 2024-01     |
+| 1001     | C001        | 100.0  | 1        | 2024-01-01  | 100.0             | 2024-01     |
+| 1066     | C006        | 262.5  | 1        | 2024-03-06  | 262.5             | 2024-03     |
+
+Full curated table: `pro-bigquery-cloud-analytics.ds_bigquery_cloud_analytics.sales_curated`
+
 ### Docker Testing Status: ✅ VERIFIED
 - **Base Image**: python:3.10-slim
 - **Build**: Successful
