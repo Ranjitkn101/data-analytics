@@ -1,0 +1,7 @@
+pandas
+google-cloud-bigquery
+pyarrow
+pytest
+python-dotenv
+#pytest-cov
+#coverage    
