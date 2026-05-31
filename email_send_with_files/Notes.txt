@@ -1,0 +1,96 @@
+Folder structure:
+email_sender/
+├── main.py
+├── requirements.txt
+└── Dockerfile
+
+
+
+
+gcloud config set project iot-device-project
+
+
+gcloud projects add-iam-policy-binding iot-device-project --member="serviceAccount:827160918241-compute@developer.gserviceaccount.com" --role="roles/storage.admin"
+gcloud projects add-iam-policy-binding iot-device-project --member="serviceAccount:827160918241@cloudbuild.gserviceaccount.com" --role="roles/storage.admin"
+gcloud projects add-iam-policy-binding iot-device-project --member="serviceAccount:827160918241-compute@developer.gserviceaccount.com" --role="roles/logging.logWriter"
+gcloud projects add-iam-policy-binding iot-device-project --member="serviceAccount:827160918241@cloudbuild.gserviceaccount.com" --role="roles/logging.logWriter"
+
+gcloud services enable artifactregistry.googleapis.com
+
+gcloud projects add-iam-policy-binding iot-device-project --member="serviceAccount:827160918241@cloudbuild.gserviceaccount.com" --role="roles/artifactregistry.writer"
+gcloud projects add-iam-policy-binding iot-device-project --member="serviceAccount:827160918241-compute@developer.gserviceaccount.com" --role="roles/artifactregistry.writer"
+
+
+
+gcloud artifacts repositories create email-sender-repo ^
+  --repository-format=docker ^
+  --location=europe-west1 ^
+  --description="Email sender container repo"
+  
+ 
+-- any change build the code and deploy
+
+gcloud builds submit --tag europe-west1-docker.pkg.dev/iot-device-project/email-sender-repo/email-sender
+
+
+gcloud run deploy email-sender ^
+  --image europe-west1-docker.pkg.dev/iot-device-project/email-sender-repo/email-sender ^
+  --platform managed ^
+  --region europe-west1 ^
+  --allow-unauthenticated
+
+
+https://email-sender-827160918241.europe-west1.run.app
+
+
+Rngmail -- app password
+
+
+
+#curl -X POST -H "Content-Type: application/json" -d "{}" https://email-sender-827160918241.europe-west1.run.app
+
+curl -X POST -H "Content-Type: application/json" -d "{\"sender\":\"1\"}" https://email-sender-827160918241.europe-west1.run.app
+
+curl -X POST -H "Content-Type: application/json" -d "{\"sender\":\"2\"}" https://email-sender-827160918241.europe-west1.run.app
+
+
+
+-- to delete/cancel
+
+gcloud run revisions list ^
+  --service=email-sender ^
+  --region=europe-west1 ^
+  --project=iot-device-project
+  
+  
+# one particular version if you need to delete
+gcloud run revisions delete email-sender-00001-bjl ^
+  --region=europe-west1 ^
+  --project=iot-device-project ^
+  --quiet
+
+
+
+gcloud run services update-traffic email-sender ^
+  --region=europe-west1 ^
+  --project=iot-device-project ^
+  --to-latest
+
+
+-- all version 
+gcloud run services delete email-sender ^
+  --region=europe-west1 ^
+  --project=iot-device-project ^
+  --quiet
+
+
+=========Databricks
+
+GCP Console → Databricks → Workspaces → Delete
+
+gcloud services disable databricks.googleapis.com ^
+  --project=iot-device-project
+
+
+gcloud asset search-all-resources ^
+  --project=iot-device-project
