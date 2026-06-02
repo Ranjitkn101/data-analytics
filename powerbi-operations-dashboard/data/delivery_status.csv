@@ -1,0 +1,4 @@
+StatusID,StatusName,IsFulfilled
+1,Fulfilled,TRUE
+2,Delayed,TRUE
+3,Not Fulfilled,FALSE

@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Power BI Operations Data Model",
+  "type": "object",
+  "properties": {
+    "FactOrders": {
+      "type": "object",
+      "properties": {
+        "OrderID": {"type": "string"},
+        "OrderDate": {"type": "string", "format": "date"},
+        "ProductID": {"type": "string"},
+        "WarehouseID": {"type": "string"},
+        "StatusID": {"type": "string"},
+        "Quantity": {"type": "integer"},
+        "OrderValue": {"type": "number"},
+        "ProcessingTimeMin": {"type": "integer"},
+        "DelayReason": {"type": "string"},
+        "ProcessingTimeHours": {"type": "number"}
+      },
+      "required": ["OrderID", "OrderDate", "ProductID", "WarehouseID", "StatusID", "Quantity", "OrderValue"]
+    },
+    "DimDate": {
+      "type": "object",
+      "properties": {
+        "Date": {"type": "string", "format": "date"},
+        "Year": {"type": "integer"},
+        "Quarter": {"type": "string"},
+        "Month": {"type": "string"},
+        "MonthName": {"type": "string"},
+        "WeekNumber": {"type": "integer"},
+        "DayOfWeek": {"type": "string"}
+      },
+      "required": ["Date", "Year", "Month"]
+    },
+    "DimProduct": {
+      "type": "object",
+      "properties": {
+        "ProductID": {"type": "string"},
+        "ProductName": {"type": "string"},
+        "Category": {"type": "string"},
+        "LeadTimeDays": {"type": "integer"},
+        "WeightKg": {"type": "number"}
+      },
+      "required": ["ProductID", "ProductName", "Category"]
+    },
+    "DimWarehouse": {
+      "type": "object",
+      "properties": {
+        "WarehouseID": {"type": "string"},
+        "WarehouseName": {"type": "string"},
+        "Region": {"type": "string"},
+        "Capacity": {"type": "integer"},
+        "Manager": {"type": "string"}
+      },
+      "required": ["WarehouseID", "WarehouseName", "Region"]
+    },
+    "DimStatus": {
+      "type": "object",
+      "properties": {
+        "StatusID": {"type": "string"},
+        "StatusName": {"type": "string"},
+        "IsFulfilled": {"type": "boolean"}
+      },
+      "required": ["StatusID", "StatusName", "IsFulfilled"]
+    }
+  },
+  "additionalProperties": false
+}
