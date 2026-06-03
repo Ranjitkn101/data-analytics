@@ -1,0 +1,46 @@
+gcloud services enable servicenetworking.googleapis.com
+
+gcloud compute addresses create google-managed-services-iot-device-project \
+    --global \
+    --purpose=VPC_PEERING \
+    --prefix-length=16 \
+    --network=default
+
+gcloud services vpc-peerings connect \
+    --service=servicenetworking.googleapis.com \
+    --network=default \
+    --ranges=google-managed-services-iot-device-project
+
+
+gcloud sql instances create balajee-postgres \
+    --edition=ENTERPRISE \
+    --database-version=POSTGRES_18 \
+    --tier=db-custom-2-8192 \
+    --region=europe-west1 \
+    --storage-type=SSD \
+    --storage-size=100 \
+    --availability-type=zonal \
+    --backup \
+    --enable-point-in-time-recovery \
+    --network=default \
+    --assign-ip
+
+
+-- Create posgress user
+
+gcloud sql users create app_user \
+    --instance=balajee-postgres \
+    --password="StrongPassword123!"
+
+gcloud sql users set-password postgres \
+    --instance=balajee-postgres \
+    --password="AnotherStrongPassword!"
+	
+gcloud sql users create myusername \
+    --instance=balajee-postgres \
+    --password="Myusername123!"
+
+
+
+-- drop instance 
+gcloud sql instances delete balajee-postgres --quiet

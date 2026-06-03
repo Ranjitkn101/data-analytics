@@ -1,0 +1,6 @@
+ProductID,ProductName,Category,LeadTimeDays,WeightKg
+PRD001,Smartphone,Electronics,2,0.24
+PRD002,Laptop,Electronics,3,1.45
+PRD003,Office Chair,Furniture,5,12.0
+PRD004,Desk Lamp,Home,4,1.2
+PRD005,Monitor,Electronics,3,4.3

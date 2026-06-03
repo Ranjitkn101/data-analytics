@@ -1,0 +1,4 @@
+WarehouseID,WarehouseName,Region,Capacity,Manager
+WH001,North Hub,North,1200,Alex Reed
+WH002,East Hub,East,950,Maya Patel
+WH003,South Hub,South,1100,Ryan Kim
